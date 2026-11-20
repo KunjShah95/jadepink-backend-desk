@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jade Pink Backend Desk</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-left"><h1>Jade Pink Backend Desk</h1></div>
+    <div class="topbar-right">
+      <label>Working as:</label>
+      <select id="userSelect" class="working-as"></select>
+      <span id="userRole" class="user-role"></span>
+      <button id="btnLogout" class="btn-logout">Logout</button>
+    </div>
+  </header>
+  <nav class="main-nav">
+    <button class="nav-btn active" data-screen="dashboard">Dashboard</button>
+    <button class="nav-btn" data-screen="stage1">Stage 1 — Parcel Receipt</button>
+    <button class="nav-btn" data-screen="stage2">Stage 2 — QC &amp; Price</button>
+    <button class="nav-btn" data-screen="stage3">Stage 3 — Ironing</button>
+    <button class="nav-btn" data-screen="stage4">Stage 4 — Tagging &amp; Inward</button>
+    <button class="nav-btn" data-screen="stage5">Stage 5 — Display</button>
+    <button class="nav-btn" data-screen="stage6">Stage 6 — Designer Accept</button>
+    <button class="nav-btn" data-screen="stage7">Stage 7 — RTV</button>
+    <button class="nav-btn" data-screen="stage8">Stage 8 — Settlement</button>
+    <button class="nav-btn" data-screen="holds">Holds</button>
+    <button class="nav-btn" data-screen="dailyclose">Daily Close</button>
+    <button class="nav-btn" data-screen="setup">Setup</button>
+  </nav>
+  <main class="screens">
+    <section id="screen-dashboard" class="screen active">
+      <h2>Dashboard</h2>
+      <div class="dashboard-grid">
+        <div class="stat-card"><h3>Lots Today</h3><div class="stat-value" id="statLots">0</div></div>
+        <div class="stat-card"><h3>Open Holds</h3><div class="stat-value" id="statHolds">0</div></div>
+        <div class="stat-card"><h3>Pieces on Floor</h3><div class="stat-value" id="statFloor">0</div></div>
+        <div class="stat-card"><h3>Pending Daily Close</h3><div class="stat-value" id="statClose">0</div></div>
+      </div>
+      <h3>Recent Lots</h3>
+      <table id="recentLotsTable">
+        <thead><tr><th>Lot No</th><th>Designer</th><th>Stage</th><th>Status</th><th>Created</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- Stage 1: Parcel Receipt -->
+    <section id="screen-stage1" class="screen">
+      <h2>Stage 1 — Parcel Receipt</h2>
+      <form id="formStage1">
+        <div class="form-row">
+          <label>Designer <input type="text" name="designer" required></label>
+          <label>Courier <input type="text" name="courier"></label>
+          <label>Tracking <input type="text" name="tracking"></label>
+        </div>
+        <div class="form-row">
+          <label>Boxes <input type="number" name="boxes" min="1" required></label>
+          <label>Stock Type <select name="stockType" required></select></label>
+          <label>Box Condition <select name="condition" required></select></label>
+        </div>
+        <div class="form-row">
+          <label>Expected? <select name="expected" required></select></label>
+          <label>PO Ref <input type="text" name="poRef"></label>
+          <label>Upcoming Parcel <select name="upcomingId"></select></label>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Create Lot</button>
+        </div>
+      </form>
+      <h3>Box Photos</h3>
+      <div id="stage1Photos"></div>
+    </section>
+
+    <!-- Stage 2: QC & Price -->
+    <section id="screen-stage2" class="screen">
+      <h2>Stage 2 — QC &amp; Price Hold</h2>
+      <div class="stage-selector">
+        <label>Select Lot: <select id="stage2LotSelect"></select></label>
+      </div>
+      <div id="stage2Content"></div>
+    </section>
+
+    <!-- Stage 3: Ironing -->
+    <section id="screen-stage3" class="screen">
+      <h2>Stage 3 — Ironing Count</h2>
+      <div class="stage-selector">
+        <label>Select Lot: <select id="stage3LotSelect"></select></label>
+      </div>
+      <div id="stage3Content"></div>
+    </section>
+
+    <!-- Stage 4: Tagging & Inward -->
+    <section id="screen-stage4" class="screen">
+      <h2>Stage 4 — Tagging &amp; Inward</h2>
+      <div class="stage-selector">
+        <label>Select Lot: <select id="stage4LotSelect"></select></label>
+      </div>
+      <div id="stage4Content"></div>
+    </section>
+
+    <!-- Stage 5: Display -->
+    <section id="screen-stage5" class="screen">
+      <h2>Stage 5 — Display</h2>
+      <div class="stage-selector">
+        <label>Select Lot: <select id="stage5LotSelect"></select></label>
+      </div>
+      <div id="stage5Content"></div>
+    </section>
+
+    <!-- Stage 6: Designer Accept -->
+    <section id="screen-stage6" class="screen">
+      <h2>Stage 6 — Designer Accept / Review</h2>
+      <div class="stage-selector">
+        <label>Select Lot: <select id="stage6LotSelect"></select></label>
+      </div>
+      <div id="stage6Content"></div>
+    </section>
+
+    <!-- Stage 7: RTV -->
+    <section id="screen-stage7" class="screen">
+      <h2>Stage 7 — RTV (Return to Vendor)</h2>
+      <div class="stage-selector">
+        <label>Select Lot: <select id="stage7LotSelect"></select></label>
+      </div>
+      <div id="stage7Content"></div>
+    </section>
+
+    <!-- Stage 8: Settlement -->
+    <section id="screen-stage8" class="screen">
+      <h2>Stage 8 — Settlement</h2>
+      <div class="stage-selector">
+        <label>Select Lot: <select id="stage8LotSelect"></select></label>
+      </div>
+      <div id="stage8Content"></div>
+    </section>
+
+    <!-- Holds -->
+    <section id="screen-holds" class="screen">
+      <h2>Holds</h2>
+      <div class="filter-row">
+        <label>Filter: <select id="holdFilter"></select></label>
+        <label>Severity: <select id="holdSevFilter"></select></label>
+      </div>
+      <table id="holdsTable">
+        <thead><tr><th>Hold ID</th><th>Lot</th><th>Piece</th><th>Error</th><th>Sev</th><th>Status</th><th>Found</th><th>By</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- Daily Close -->
+    <section id="screen-dailyclose" class="screen">
+      <h2>Daily Close</h2>
+      <form id="formDailyClose">
+        <label>Date <input type="date" name="date" required></label>
+        <label>System Qty <input type="number" name="systemQty" min="0"></label>
+        <label>Scanned Qty <input type="number" name="scannedQty" min="0"></label>
+        <label>Open Transfer Notes <select name="openNotes"></select></label>
+        <label>Hold Shelf <select name="holdShelf"></select></label>
+        <label>Manager <select name="managerId"></select></label>
+        <label>Notes <textarea name="notes"></textarea></label>
+        <button type="submit" class="btn-primary">Save Daily Close</button>
+      </form>
+    </section>
+
+    <!-- Setup -->
+    <section id="screen-setup" class="screen">
+      <h2>Setup</h2>
+      <div class="setup-section">
+        <h3>Users</h3>
+        <table id="setupUsersTable">
+          <thead><tr><th>Name</th><th>Phone</th><th>Roles</th><th>Active</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="setup-section">
+        <h3>Storage Box Count</h3>
+        <div class="setting-item">
+          <label>Box Count (1-200): <input type="number" id="settingBoxCount" min="1" max="200"></label>
+          <button id="btnSaveBoxCount" class="btn-primary">Save</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <script src="app-supabase.js"></script>
+</body>
+</html>

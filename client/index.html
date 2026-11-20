@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Jade Pink — Backend Desk</title>
+    <meta
+      name="description"
+      content="Jade Pink Backend Desk — the piece-level record for every designer parcel, from receipt to settlement."
+    />
+    <meta name="theme-color" content="#050506" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#050506" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style>
+      /* Painted before the bundle loads so the first frame is already the paper ground. */
+      html { background: #050506; }
+      html[data-theme='light'] { background: #fafafa; }
+      html[data-surface='mkt'] { background: #050506; }
+    </style>
+    <script>
+      // Public pages are always the dark canvas; mark them before first paint.
+      if (!location.pathname.startsWith('/app')) document.documentElement.dataset.surface = 'mkt'
+      else try { var t = localStorage.getItem('jp.desk.theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

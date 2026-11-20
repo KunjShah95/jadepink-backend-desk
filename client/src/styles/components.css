@@ -1,0 +1,1357 @@
+/* ==========================================================================
+   Jade Pink — component vocabulary
+   Every control carries: default, hover, focus-visible, active, disabled,
+   loading, error. Same shapes everywhere; the world lives in the details.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.btn {
+  --btn-bg: transparent;
+  --btn-fg: var(--ink);
+  --btn-bd: transparent;
+  --btn-bg-hover: var(--paper-sunken);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-block-size: var(--target);
+  padding-inline: var(--sp-4);
+  border: var(--hair) solid var(--btn-bd);
+  border-radius: var(--r-sm);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-size: var(--fs-sm);
+  font-weight: 550;
+  letter-spacing: -0.005em;
+  line-height: 1;
+  white-space: nowrap;
+  transition:
+    background-color var(--dur-1) var(--ease-out),
+    border-color var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out),
+    transform var(--dur-1) var(--ease-out);
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--btn-bg-hover);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0.5px);
+}
+
+.btn:disabled,
+.btn[aria-disabled='true'] {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.btn[data-loading='true'] {
+  cursor: progress;
+  color: transparent;
+  position: relative;
+}
+
+.btn[data-loading='true']::after {
+  content: '';
+  position: absolute;
+  inline-size: 1em;
+  block-size: 1em;
+  border: 1.5px solid currentColor;
+  border-block-start-color: transparent;
+  border-radius: 50%;
+  color: var(--btn-fg);
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btn--primary {
+  --btn-bg: var(--jade);
+  --btn-fg: var(--jade-on);
+  --btn-bd: var(--jade);
+  --btn-bg-hover: var(--jade-deep);
+  box-shadow: var(--shadow-1);
+}
+
+.btn--primary:active:not(:disabled) {
+  background: var(--jade-deep);
+}
+
+.btn--secondary {
+  --btn-bg: var(--paper-raised);
+  --btn-fg: var(--ink);
+  --btn-bd: var(--rule-strong);
+  --btn-bg-hover: var(--paper-sunken);
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--ink-2);
+  --btn-bd: transparent;
+  --btn-bg-hover: var(--paper-sunken);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  color: var(--ink);
+}
+
+.btn--danger {
+  --btn-bg: transparent;
+  --btn-fg: var(--oxblood);
+  --btn-bd: var(--oxblood);
+  --btn-bg-hover: var(--oxblood-tint);
+}
+
+.btn--quiet {
+  --btn-bg: transparent;
+  --btn-fg: var(--jade);
+  --btn-bd: transparent;
+  --btn-bg-hover: transparent;
+  padding-inline: 0;
+  min-block-size: auto;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: color-mix(in oklab, var(--jade) 40%, transparent);
+}
+
+.btn--quiet:hover:not(:disabled) {
+  text-decoration-color: currentColor;
+}
+
+.btn--sm {
+  min-block-size: 2rem;
+  padding-inline: var(--sp-3);
+  font-size: var(--fs-xs);
+}
+
+.btn--lg {
+  min-block-size: 3rem;
+  padding-inline: var(--sp-6);
+  font-size: var(--fs-base);
+}
+
+.btn--block {
+  inline-size: 100%;
+}
+
+.btn-icon {
+  display: inline-grid;
+  place-items: center;
+  inline-size: var(--target);
+  block-size: var(--target);
+  border: var(--hair) solid transparent;
+  border-radius: var(--r-sm);
+  color: var(--ink-2);
+  transition:
+    background-color var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out);
+}
+
+.btn-icon:hover:not(:disabled) {
+  background: var(--paper-sunken);
+  color: var(--ink);
+}
+
+.btn-icon:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-icon[data-active='true'] {
+  background: var(--jade-tint);
+  color: var(--jade);
+}
+
+/* --------------------------------------------------------------------------
+   Fields
+   -------------------------------------------------------------------------- */
+
+.field {
+  display: grid;
+  gap: var(--sp-2);
+  min-inline-size: 0;
+}
+
+.field__label {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.field__req {
+  color: var(--rose-deep);
+  font-size: var(--fs-2xs);
+}
+
+.field__hint {
+  font-size: var(--fs-2xs);
+  color: var(--ink-3);
+  line-height: var(--lh-snug);
+}
+
+.field__error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  font-size: var(--fs-2xs);
+  color: var(--oxblood);
+  font-weight: 500;
+  line-height: var(--lh-snug);
+}
+
+.input,
+.select,
+.textarea {
+  inline-size: 100%;
+  min-block-size: var(--target);
+  padding-inline: var(--sp-3);
+  padding-block: var(--sp-2);
+  border: var(--hair) solid var(--rule-strong);
+  border-radius: var(--r-sm);
+  background: var(--paper-raised);
+  color: var(--ink);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+  transition:
+    border-color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out),
+    background-color var(--dur-1) var(--ease-out);
+}
+
+.input:hover:not(:disabled),
+.select:hover:not(:disabled),
+.textarea:hover:not(:disabled) {
+  border-color: var(--ink-3);
+}
+
+.input:focus-visible,
+.select:focus-visible,
+.textarea:focus-visible {
+  border-color: var(--jade);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--jade) 18%, transparent);
+}
+
+.input:disabled,
+.select:disabled,
+.textarea:disabled {
+  background: var(--paper-sunken);
+  color: var(--ink-3);
+  cursor: not-allowed;
+}
+
+.input[aria-invalid='true'],
+.select[aria-invalid='true'],
+.textarea[aria-invalid='true'] {
+  border-color: var(--oxblood);
+  background: var(--oxblood-tint);
+}
+
+.input[aria-invalid='true']:focus-visible,
+.select[aria-invalid='true']:focus-visible,
+.textarea[aria-invalid='true']:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--oxblood) 20%, transparent);
+}
+
+.textarea {
+  min-block-size: 5.5rem;
+  resize: vertical;
+  line-height: var(--lh-normal);
+}
+
+.select {
+  appearance: none;
+  padding-inline-end: var(--sp-8);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%235c554a' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--sp-3) center;
+  cursor: pointer;
+}
+
+:root[data-theme='dark'] .select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%23b0a696' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* Input with a leading adornment */
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-inline-size: 0;
+}
+
+.input-wrap__icon {
+  position: absolute;
+  inset-inline-start: var(--sp-3);
+  display: grid;
+  place-items: center;
+  color: var(--ink-3);
+  pointer-events: none;
+}
+
+.input-wrap .input {
+  padding-inline-start: 2.5rem;
+}
+
+/* Checkbox: real input, drawn box, whole row is the target */
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  min-block-size: var(--target);
+  padding: var(--sp-2) var(--sp-2);
+  margin-inline: calc(var(--sp-2) * -1);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: background-color var(--dur-1) var(--ease-out);
+}
+
+.check:hover {
+  background: color-mix(in oklab, var(--jade) 5%, transparent);
+}
+
+.check__input {
+  appearance: none;
+  flex: none;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  margin-block-start: 0.0625rem;
+  border: var(--hair-strong) solid var(--rule-strong);
+  border-radius: var(--r-xs);
+  background: var(--paper-raised);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-1) var(--ease-out),
+    border-color var(--dur-1) var(--ease-out);
+}
+
+.check__input::after {
+  content: '';
+  inline-size: 0.6rem;
+  block-size: 0.32rem;
+  border-inline-start: 2px solid var(--jade-on);
+  border-block-end: 2px solid var(--jade-on);
+  transform: rotate(-45deg) translate(0.04rem, -0.06rem) scale(0.5);
+  opacity: 0;
+  transition:
+    opacity var(--dur-1) var(--ease-out),
+    transform var(--dur-2) var(--ease-out);
+}
+
+.check__input:checked {
+  background: var(--jade);
+  border-color: var(--jade);
+}
+
+.check__input:checked::after {
+  opacity: 1;
+  transform: rotate(-45deg) translate(0.04rem, -0.06rem) scale(1);
+}
+
+.check__input:focus-visible {
+  box-shadow: var(--focus-ring);
+}
+
+.check__input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.check__text {
+  display: grid;
+  gap: 0.125rem;
+  min-inline-size: 0;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+  padding-block-start: 0.0625rem;
+}
+
+.check__text[data-done='true'] {
+  color: var(--ink-3);
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in oklab, var(--ink-3) 55%, transparent);
+}
+
+.check__note {
+  font-size: var(--fs-2xs);
+  color: var(--ink-3);
+  font-family: var(--font-mono);
+}
+
+/* --------------------------------------------------------------------------
+   Chips, badges, pills
+   -------------------------------------------------------------------------- */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.1875rem 0.5rem;
+  border: var(--hair) solid var(--rule);
+  border-radius: var(--r-xs);
+  background: var(--paper-raised);
+  color: var(--ink-2);
+  font-size: var(--fs-3xs);
+  font-weight: 550;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.chip--jade {
+  background: var(--jade-tint);
+  border-color: color-mix(in oklab, var(--jade) 24%, transparent);
+  color: var(--jade);
+}
+
+.chip--rose {
+  background: var(--rose-tint);
+  border-color: color-mix(in oklab, var(--rose-deep) 22%, transparent);
+  color: var(--rose-deep);
+}
+
+.chip--amber {
+  background: var(--amber-tint);
+  border-color: color-mix(in oklab, var(--amber) 26%, transparent);
+  color: var(--amber);
+}
+
+.chip--oxblood {
+  background: var(--oxblood-tint);
+  border-color: color-mix(in oklab, var(--oxblood) 26%, transparent);
+  color: var(--oxblood);
+}
+
+.chip--moss {
+  background: var(--moss-tint);
+  border-color: color-mix(in oklab, var(--moss) 26%, transparent);
+  color: var(--moss);
+}
+
+/* A chip you can press */
+.chip-btn {
+  cursor: pointer;
+  min-block-size: 2rem;
+  padding-inline: var(--sp-3);
+  font-size: var(--fs-2xs);
+  transition:
+    background-color var(--dur-1) var(--ease-out),
+    border-color var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out);
+}
+
+.chip-btn:hover {
+  border-color: var(--ink-3);
+  color: var(--ink);
+}
+
+.chip-btn[aria-pressed='true'] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--ink-inverse);
+}
+
+/* Severity: always carries a letter, never colour alone */
+.sev {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 1.375rem;
+  block-size: 1.375rem;
+  border-radius: var(--r-xs);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  line-height: 1;
+  flex: none;
+}
+
+.sev--A {
+  background: var(--oxblood);
+  color: #fff;
+}
+
+.sev--B {
+  background: var(--amber);
+  color: #fff;
+}
+
+.sev--C {
+  background: var(--rule-strong);
+  color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   Panels
+   -------------------------------------------------------------------------- */
+
+.panel {
+  background: var(--paper-raised);
+  border: var(--hair) solid var(--rule);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-1);
+}
+
+.panel--flush {
+  box-shadow: none;
+}
+
+.panel__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  border-block-end: var(--hair) solid var(--rule);
+  min-block-size: 3.25rem;
+}
+
+.panel__title {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.panel__body {
+  padding: var(--sp-5);
+}
+
+.panel__body--tight {
+  padding: var(--sp-3);
+}
+
+.panel__foot {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-5);
+  border-block-start: var(--hair) solid var(--rule);
+  background: color-mix(in oklab, var(--paper-sunken) 45%, transparent);
+}
+
+/* Perforation — the tear line of a bundle ticket */
+.perf {
+  block-size: 1px;
+  border: 0;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--rule-strong) 0 4px,
+    transparent 4px 10px
+  );
+  opacity: 0.85;
+}
+
+/* Punched holes on the stub edge */
+.punched {
+  position: relative;
+}
+
+.punched::before,
+.punched::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: -0.375rem;
+  inline-size: 0.625rem;
+  block-size: 0.625rem;
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: inset 0 0 0 1px var(--rule-strong);
+}
+
+.punched::before {
+  inset-block-start: 1.75rem;
+}
+
+.punched::after {
+  inset-block-end: 1.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   The stamp — a gate, once passed, is stamped into the record
+   -------------------------------------------------------------------------- */
+
+.stamp {
+  display: inline-grid;
+  gap: 0.1875rem;
+  padding: var(--sp-2) var(--sp-3);
+  border: 1.5px solid currentColor;
+  border-radius: var(--r-xs);
+  outline: 1px solid currentColor;
+  outline-offset: 2px;
+  color: var(--jade);
+  font-family: var(--font-mono);
+  font-size: var(--fs-3xs);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.25;
+  transform: rotate(-1.4deg);
+  transform-origin: center;
+  transition: transform var(--dur-3) var(--ease-out);
+}
+
+.stamp:hover {
+  transform: rotate(0deg);
+}
+
+.stamp__who {
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+  text-transform: none;
+  font-family: var(--font-ui);
+  font-weight: 500;
+}
+
+.stamp--void {
+  color: var(--ink-3);
+  text-decoration: line-through;
+}
+
+/* --------------------------------------------------------------------------
+   The spine — one calibrated rail; state is line form, never hue alone
+   -------------------------------------------------------------------------- */
+
+.spine {
+  --rail-x: 0.5rem;
+  position: relative;
+  display: grid;
+  gap: 0;
+}
+
+.spine__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--sp-2);
+  inline-size: 100%;
+  padding-inline-start: 2.25rem;
+  padding-block: var(--sp-2);
+  border-radius: var(--r-sm);
+  text-align: start;
+  transition: background-color var(--dur-1) var(--ease-out);
+}
+
+/* the rail segment */
+.spine__item::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: var(--rail-x);
+  inset-block: 0;
+  inline-size: 1px;
+  background: var(--rule);
+}
+
+.spine__item:first-child::before {
+  inset-block-start: 50%;
+}
+
+.spine__item:last-child::before {
+  inset-block-end: 50%;
+}
+
+/* the tick — this is the state carrier */
+.spine__item::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: var(--rail-x);
+  inset-block-start: 50%;
+  translate: 0 -50%;
+  block-size: 1px;
+  inline-size: 0.5rem;
+  background: var(--rule-strong);
+  transition:
+    inline-size var(--dur-2) var(--ease-out),
+    block-size var(--dur-2) var(--ease-out),
+    background-color var(--dur-2) var(--ease-out);
+}
+
+.spine__no {
+  position: absolute;
+  inset-inline-start: 1.0625rem;
+  inset-block-start: 50%;
+  translate: 0 -50%;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.spine__label {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--ink-2);
+  line-height: 1.3;
+}
+
+.spine__meta {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Passed: solid, doubled-weight line */
+.spine__item[data-state='done']::before {
+  background: color-mix(in oklab, var(--jade) 45%, transparent);
+}
+
+.spine__item[data-state='done']::after {
+  block-size: 2px;
+  inline-size: 0.75rem;
+  background: var(--jade);
+}
+
+.spine__item[data-state='done'] .spine__label {
+  color: var(--ink);
+}
+
+/* Pending: dashed, thin, short */
+.spine__item[data-state='pending']::after {
+  inline-size: 0.375rem;
+  background: repeating-linear-gradient(
+    to right,
+    var(--rule-strong) 0 2px,
+    transparent 2px 4px
+  );
+}
+
+/* Stale: half-height line, sits low */
+.spine__item[data-state='stale']::after {
+  block-size: 1px;
+  inline-size: 0.5rem;
+  background: var(--rule-strong);
+  translate: 0 3px;
+}
+
+/* Blocked: doubled, short, oxblood */
+.spine__item[data-state='blocked']::after {
+  block-size: 2px;
+  inline-size: 0.625rem;
+  background:
+    linear-gradient(var(--oxblood), var(--oxblood)) 0 0 / 100% 2px no-repeat,
+    linear-gradient(var(--oxblood), var(--oxblood)) 0 4px / 100% 2px no-repeat;
+  translate: 0 -3px;
+}
+
+/* Current: doubled line, taller than its neighbours, with a lamp behind it */
+.spine__item[data-state='current'] {
+  background: linear-gradient(
+    to right,
+    color-mix(in oklab, var(--jade) 9%, transparent),
+    transparent 78%
+  );
+}
+
+.spine__item[data-state='current']::before {
+  background: var(--jade);
+}
+
+.spine__item[data-state='current']::after {
+  block-size: 2px;
+  inline-size: 1.125rem;
+  background:
+    linear-gradient(var(--jade), var(--jade)) 0 0 / 100% 2px no-repeat,
+    linear-gradient(var(--jade), var(--jade)) 0 5px / 100% 2px no-repeat;
+  translate: 0 -4px;
+}
+
+.spine__item[data-state='current'] .spine__no {
+  color: var(--jade);
+  font-weight: 600;
+}
+
+.spine__item[data-state='current'] .spine__label {
+  color: var(--ink);
+  font-weight: 650;
+}
+
+/* Attention: the longest, doubled, amber line outranks everything */
+.spine__item[data-attention='true']::after {
+  inline-size: 1.5rem;
+  block-size: 2px;
+  background:
+    linear-gradient(var(--amber), var(--amber)) 0 0 / 100% 2px no-repeat,
+    linear-gradient(var(--amber), var(--amber)) 0 5px / 100% 2px no-repeat;
+  translate: 0 -4px;
+}
+
+.spine__item:not(:disabled):hover {
+  background: color-mix(in oklab, var(--jade) 6%, transparent);
+}
+
+.spine__item:disabled {
+  cursor: default;
+}
+
+/* --------------------------------------------------------------------------
+   Tables
+   -------------------------------------------------------------------------- */
+
+.table-wrap {
+  container: tbl / inline-size;
+  overflow: auto;
+  max-inline-size: 100%;
+  border-radius: var(--r-md);
+}
+
+.table-wrap:focus-visible {
+  box-shadow: var(--focus-ring);
+}
+
+.table {
+  inline-size: 100%;
+  min-inline-size: 44rem;
+  font-size: var(--fs-sm);
+}
+
+.table caption {
+  text-align: start;
+  padding-block-end: var(--sp-3);
+  font-size: var(--fs-2xs);
+  color: var(--ink-3);
+}
+
+.table thead {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+}
+
+.table th {
+  padding: var(--sp-2) var(--sp-3);
+  border-block-end: var(--hair) solid var(--rule-strong);
+  background: var(--paper-sunken);
+  font-size: var(--fs-3xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-3);
+  text-align: start;
+  white-space: nowrap;
+}
+
+.table th:has(> button) {
+  padding: 0;
+}
+
+.table th > button {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  inline-size: 100%;
+  min-block-size: 2.25rem;
+  padding: var(--sp-2) var(--sp-3);
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.table th > button:hover {
+  color: var(--ink);
+  background: color-mix(in oklab, var(--ink) 5%, transparent);
+}
+
+.table th[aria-sort='ascending'] > button,
+.table th[aria-sort='descending'] > button {
+  color: var(--ink);
+}
+
+.table th > button svg {
+  opacity: 0;
+  transition: opacity var(--dur-1) var(--ease-out);
+}
+
+.table th:hover > button svg,
+.table th[aria-sort] > button svg {
+  opacity: 1;
+}
+
+.table td {
+  padding: var(--sp-3);
+  border-block-end: var(--hair) solid var(--rule);
+  vertical-align: middle;
+}
+
+.table tbody tr {
+  transition: background-color var(--dur-1) var(--ease-out);
+}
+
+.table tbody tr[data-clickable='true'] {
+  cursor: pointer;
+}
+
+.table tbody tr[data-clickable='true']:hover {
+  background: color-mix(in oklab, var(--jade) 5%, transparent);
+}
+
+.table tbody tr[data-selected='true'] {
+  background: color-mix(in oklab, var(--jade) 8%, transparent);
+}
+
+.table tbody tr:last-child td {
+  border-block-end: 0;
+}
+
+.table .cell-num {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table .cell-mono {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Stack into cards when the table's own container is narrow */
+@container tbl (inline-size < 40rem) {
+  .table {
+    min-inline-size: 0;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+  }
+
+  .table tr {
+    padding: var(--sp-3);
+    border-block-end: var(--hair) solid var(--rule);
+  }
+
+  .table td {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: var(--sp-3);
+    padding: 0.1875rem 0;
+    border: 0;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    font-size: var(--fs-3xs);
+    font-weight: 600;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-block-start: 0.125rem;
+  }
+
+  .table .cell-num {
+    text-align: start;
+  }
+
+  .table td[data-empty]::before {
+    content: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Tabs
+   -------------------------------------------------------------------------- */
+
+.tabs {
+  display: flex;
+  align-items: stretch;
+  gap: var(--sp-1);
+  overflow-x: auto;
+  border-block-end: var(--hair) solid var(--rule);
+  scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs__tab {
+  position: relative;
+  flex: none;
+  min-block-size: var(--target);
+  padding-inline: var(--sp-3);
+  font-size: var(--fs-sm);
+  font-weight: 550;
+  color: var(--ink-3);
+  white-space: nowrap;
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+.tabs__tab:hover {
+  color: var(--ink);
+}
+
+.tabs__tab[aria-selected='true'] {
+  color: var(--ink);
+  font-weight: 650;
+}
+
+/* Selected state is a shape, not a colour: underline via border on a pseudo */
+.tabs__tab[aria-selected='true']::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 -1px;
+  border-block-end: 2px solid var(--jade);
+}
+
+.tabs__count {
+  margin-inline-start: 0.375rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   Segmented control
+   -------------------------------------------------------------------------- */
+
+.segmented {
+  display: inline-flex;
+  padding: 2px;
+  border: var(--hair) solid var(--rule-strong);
+  border-radius: var(--r-sm);
+  background: var(--paper-sunken);
+  gap: 2px;
+}
+
+.segmented__opt {
+  min-block-size: 2rem;
+  padding-inline: var(--sp-3);
+  border-radius: 2px;
+  font-size: var(--fs-2xs);
+  font-weight: 550;
+  color: var(--ink-2);
+  white-space: nowrap;
+  transition:
+    background-color var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out);
+}
+
+.segmented__opt:hover {
+  color: var(--ink);
+}
+
+.segmented__opt[aria-pressed='true'] {
+  background: var(--paper-raised);
+  color: var(--ink);
+  box-shadow: var(--shadow-1);
+}
+
+/* --------------------------------------------------------------------------
+   Dialog — native <dialog>, so focus trap and Escape come from the platform
+   -------------------------------------------------------------------------- */
+
+.dialog {
+  inline-size: min(38rem, calc(100dvw - 2rem));
+  max-block-size: calc(100dvh - 4rem);
+  padding: 0;
+  border: var(--hair) solid var(--rule-strong);
+  border-radius: var(--r-md);
+  background: var(--paper-raised);
+  color: var(--ink);
+  box-shadow: var(--shadow-3);
+  overflow: hidden;
+}
+
+.dialog--wide {
+  inline-size: min(56rem, calc(100dvw - 2rem));
+}
+
+.dialog::backdrop {
+  background: color-mix(in oklab, var(--ink) 46%, transparent);
+  backdrop-filter: blur(2px);
+}
+
+.dialog[open] {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  animation: dialog-in var(--dur-2) var(--ease-out);
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.99);
+  }
+}
+
+.dialog__head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  padding: var(--sp-5) var(--sp-5) var(--sp-4);
+  border-block-end: var(--hair) solid var(--rule);
+}
+
+.dialog__title {
+  font-size: var(--fs-md);
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  line-height: var(--lh-snug);
+}
+
+.dialog__desc {
+  margin-block-start: 0.1875rem;
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+  line-height: var(--lh-snug);
+}
+
+.dialog__body {
+  padding: var(--sp-5);
+  overflow: auto;
+}
+
+.dialog__foot {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  border-block-start: var(--hair) solid var(--rule);
+  background: color-mix(in oklab, var(--paper-sunken) 45%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   Toast
+   -------------------------------------------------------------------------- */
+
+.toaster {
+  position: fixed;
+  inset-block-end: calc(var(--sp-5) + env(safe-area-inset-bottom, 0px));
+  inset-inline-end: var(--sp-5);
+  z-index: 60;
+  display: grid;
+  gap: var(--sp-2);
+  inline-size: min(24rem, calc(100dvw - 2rem));
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border: var(--hair) solid var(--rule-strong);
+  border-radius: var(--r-sm);
+  background: var(--paper-raised);
+  box-shadow: var(--shadow-2);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-snug);
+  pointer-events: auto;
+  animation: toast-in var(--dur-2) var(--ease-out);
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.toast[data-tone='error'] {
+  border-inline-start: 3px solid var(--oxblood);
+}
+
+.toast[data-tone='success'] {
+  border-inline-start: 3px solid var(--jade);
+}
+
+.toast[data-tone='warn'] {
+  border-inline-start: 3px solid var(--amber);
+}
+
+.toast__title {
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.toast__msg {
+  color: var(--ink-2);
+}
+
+.toast__actions {
+  display: flex;
+  gap: var(--sp-2);
+  margin-block-start: var(--sp-2);
+}
+
+/* --------------------------------------------------------------------------
+   Empty state, skeleton, progress
+   -------------------------------------------------------------------------- */
+
+.empty {
+  display: grid;
+  justify-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-10) var(--sp-6);
+  text-align: center;
+}
+
+.empty__icon {
+  display: grid;
+  place-items: center;
+  inline-size: 3rem;
+  block-size: 3rem;
+  border: var(--hair) dashed var(--rule-strong);
+  border-radius: 50%;
+  color: var(--ink-3);
+}
+
+.empty__title {
+  font-size: var(--fs-sm);
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.empty__body {
+  max-inline-size: 34ch;
+  font-size: var(--fs-xs);
+  color: var(--ink-3);
+  line-height: var(--lh-normal);
+}
+
+.skeleton {
+  border-radius: var(--r-xs);
+  background: linear-gradient(
+    90deg,
+    var(--paper-sunken) 0%,
+    color-mix(in oklab, var(--paper-sunken) 55%, var(--paper-raised)) 50%,
+    var(--paper-sunken) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.meter {
+  position: relative;
+  block-size: 3px;
+  border-radius: var(--r-full);
+  background: var(--paper-deep);
+  overflow: hidden;
+}
+
+.meter__fill {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  background: var(--jade);
+  border-radius: inherit;
+  transition: inline-size var(--dur-3) var(--ease-out);
+}
+
+.meter__fill[data-tone='amber'] {
+  background: var(--amber);
+}
+
+.meter__fill[data-tone='oxblood'] {
+  background: var(--oxblood);
+}
+
+.kbd {
+  display: inline-grid;
+  place-items: center;
+  min-inline-size: 1.375rem;
+  padding: 0.0625rem 0.3125rem;
+  border: var(--hair) solid var(--rule-strong);
+  border-block-end-width: 2px;
+  border-radius: var(--r-xs);
+  background: var(--paper-raised);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  color: var(--ink-3);
+}
+
+/* Avatar: initials only, no stock photos */
+.avatar {
+  display: grid;
+  place-items: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  border-radius: var(--r-xs);
+  background: var(--jade);
+  color: var(--jade-on);
+  font-size: var(--fs-2xs);
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  flex: none;
+}
+
+.avatar--sm {
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  font-size: 0.6875rem;
+}
+
+.avatar--rose {
+  background: var(--rose-deep);
+  color: #fff;
+}
+
+/* Definition list used across detail surfaces */
+.dl {
+  display: grid;
+  grid-template-columns: minmax(7rem, max-content) 1fr;
+  gap: var(--sp-2) var(--sp-5);
+  align-items: baseline;
+  font-size: var(--fs-sm);
+}
+
+.dl dt {
+  font-size: var(--fs-3xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+.dl dd {
+  margin: 0;
+  color: var(--ink);
+  min-inline-size: 0;
+}
+
+/* Toolbar: a row of controls that wraps rather than shrinking */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+
+.toolbar > :not(button, input, select, textarea, a, [role='button'], label) {
+  min-inline-size: 0;
+}
