@@ -16,11 +16,12 @@
       html { background: #050506; }
       html[data-theme='light'] { background: #fafafa; }
       html[data-surface='mkt'] { background: #050506; }
+      html[data-surface='mkt'][data-theme='light'] { background: #fafafa; }
     </style>
     <script>
       // Public pages are always the dark canvas; mark them before first paint.
       if (!location.pathname.startsWith('/app')) document.documentElement.dataset.surface = 'mkt'
-      else try { var t = localStorage.getItem('jp.desk.theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t } catch (e) {}
+      try { var t = localStorage.getItem('jp.desk.theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t } catch (e) {}
     </script>
   </head>
   <body>

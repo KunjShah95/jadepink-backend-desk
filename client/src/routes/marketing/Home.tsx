@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, ChevronRight, ScanLine, ShieldAlert, Scale, Users, Route as RouteIcon } from 'lucide-react'
 import { Barcode, Eyebrow, GlowCard, Marquee, MovingBorder, Reveal, TextGenerate, TracingBeam, trackPointer } from './fx'
 
-const GATES = ['Receipt', 'QC & price', 'Ironing', 'Tagging', 'Display', 'Accept', 'RTV', 'Settle']
+const GATES = ['Receive', 'Check', 'Iron', 'Tag', 'Display', 'Approval', 'Return', 'Payment']
 
 const TICKER = [
   ['IN-261114-D1L', 'QC passed', 'Neha K.', '11:42'],
@@ -15,14 +15,14 @@ const TICKER = [
 ]
 
 const STEPS = [
-  ['Parcel receipt', 'Blind count before the challan is read. A difference is noted, never ignored.', 'Receiver'],
-  ['QC & price hold', 'Each piece accepted or rejected with a reason. A tag that disagrees stops the lot.', 'QC'],
-  ['Ironing', 'Ironed count must equal the accepted count. The ledger proves it.', 'Inward team'],
-  ['Tagging & inward', 'Scan the piece, print the barcode, send it to the floor or the storeroom.', 'Inward team'],
-  ['Display', 'Rack, mannequin or box. Designer review date agreed before the walk.', 'Floor team'],
-  ['Designer accept', 'Marketing signs off presentation and price. Queries recorded, never verbal.', 'Marketing'],
-  ['Return to vendor', 'Pull pieces into a numbered box: challan, courier, acknowledgement.', 'Merchandiser'],
-  ['Settlement', 'Sell bill, acknowledged back, payment note. Accounts and management both sign.', 'Accounts'],
+  ['Receive the parcel', 'Blind count before the challan is read. A difference is noted, never ignored.', 'Receiver'],
+  ['Check quality & price', 'Each piece accepted or rejected with a reason. A tag that disagrees stops the lot.', 'QC'],
+  ['Iron the pieces', 'Ironed count must equal the accepted count. The ledger proves it.', 'Inward team'],
+  ['Tag the pieces', 'Scan the piece, print the barcode, send it to the floor or the storeroom.', 'Inward team'],
+  ['Put on display', 'Rack, mannequin or box. Designer review date agreed before the walk.', 'Floor team'],
+  ['Designer approval', 'Marketing signs off presentation and price. Queries recorded, never verbal.', 'Marketing'],
+  ['Send back to designer', 'Pull pieces into a numbered box: challan, courier, acknowledgement.', 'Merchandiser'],
+  ['Settle the payment', 'Sell bill, acknowledged back, payment note. Accounts and management both sign.', 'Accounts'],
 ]
 
 export function Home() {
@@ -118,7 +118,7 @@ function DeskPreview() {
                 <p className="mx-lothead__id mx-mono">IN-261114-D1L</p>
               </div>
               <div className="mx-lothead__meta">
-                <span className="mx-chip mx-chip--live">Gate 07 · RTV</span>
+                <span className="mx-chip mx-chip--live">Step 7 · Return</span>
                 <span className="mx-chip">24 pieces</span>
               </div>
             </div>

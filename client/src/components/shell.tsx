@@ -7,32 +7,8 @@ import { useDesk } from '../state/desk'
 import { pipeline, totals, locatePiece, searchLots } from '../lib/select'
 import { Modal, Avatar } from './ui'
 import { formatDate } from '../lib/format'
+import { useTheme } from '../lib/theme'
 
-const THEME_KEY = 'jp.desk.theme'
-
-function useTheme() {
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    try {
-      const stored = localStorage.getItem(THEME_KEY)
-      if (stored === 'light' || stored === 'dark') return stored
-    } catch {
-      /* ignore */
-    }
-    // The desk is dark by default — the same canvas as the public site.
-    return 'dark'
-  })
-
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme
-    try {
-      localStorage.setItem(THEME_KEY, theme)
-    } catch {
-      /* ignore */
-    }
-  }, [theme])
-
-  return { theme, toggle: () => setTheme((t) => (t === 'light' ? 'dark' : 'light')) }
-}
 
 /* -------------------------------------------------------------------------- */
 /* Rail                                                                       */

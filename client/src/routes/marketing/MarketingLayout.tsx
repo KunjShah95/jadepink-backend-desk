@@ -1,5 +1,6 @@
 import { Outlet, Link, NavLink, useLocation } from 'react-router-dom'
-import { ArrowRight, ArrowUpRight, Menu, X } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Menu, Moon, Sun, X } from 'lucide-react'
+import { useTheme } from '../../lib/theme'
 import { useEffect, useState } from 'react'
 
 const NAV = [
@@ -14,11 +15,11 @@ export function Mark({ size = 22 }: { size?: number }) {
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <defs>
         <linearGradient id="mx-mark-g" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#7DF0C4" />
-          <stop offset="1" stopColor="#F7A8CF" />
+          <stop style={{ stopColor: 'var(--jade, #7DF0C4)' }} />
+          <stop offset="1" style={{ stopColor: 'var(--pink, #F7A8CF)' }} />
         </linearGradient>
       </defs>
-      <rect x="1" y="1" width="22" height="22" rx="7" fill="#0B0B0E" stroke="url(#mx-mark-g)" strokeOpacity=".7" />
+      <rect x="1" y="1" width="22" height="22" rx="7" style={{ fill: 'var(--bg-1, #0B0B0E)' }} stroke="url(#mx-mark-g)" strokeOpacity=".7" />
       {/* the ticket: punched hole + eight gate ticks */}
       <circle cx="7.4" cy="12" r="1.6" fill="url(#mx-mark-g)" />
       {[0, 1, 2, 3].map((i) => (
@@ -32,6 +33,8 @@ export function MarketingLayout() {
   const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { theme, toggle } = useTheme()
+  const themeLabel = theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
 
   // Marketing is always the dark canvas — paint the root so overscroll never flashes paper.
   useEffect(() => {
@@ -84,6 +87,9 @@ export function MarketingLayout() {
           </nav>
 
           <div className="mx-nav__cta">
+            <button type="button" className="mx-theme" onClick={toggle} aria-label={themeLabel} title={themeLabel}>
+              {theme === 'light' ? <Moon size={15} /> : <Sun size={15} />}
+            </button>
             <Link to="/signin" className="mx-nav__link">
               Sign in
             </Link>
@@ -115,6 +121,10 @@ export function MarketingLayout() {
             Sign in
             <ArrowUpRight size={16} />
           </NavLink>
+          <button type="button" className="mx-nav__mlink" onClick={toggle}>
+            {theme === 'light' ? 'Dark mode' : 'Light mode'}
+            {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
+          </button>
           <Link to="/register" className="mx-btn mx-btn--light mx-btn--lg mx-btn--block">
             Start free
             <ArrowRight size={16} />

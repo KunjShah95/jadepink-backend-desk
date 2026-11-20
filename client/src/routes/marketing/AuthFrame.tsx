@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { trackPointer } from './fx'
 
-const GATES = ['Receipt', 'QC & price', 'Ironing', 'Tagging', 'Display', 'Accept', 'RTV', 'Settle']
+const GATES = ['Receive', 'Check', 'Iron', 'Tag', 'Display', 'Approval', 'Return', 'Payment']
 
 /** Split auth screen: form on the left, a lit slice of the ledger on the right. */
 export function AuthFrame({ children, aside }: { children: ReactNode; aside: { quote: string; by: string } }) {
@@ -15,7 +15,7 @@ export function AuthFrame({ children, aside }: { children: ReactNode; aside: { q
         <div className="mx-auth__ticket">
           <div className="mx-auth__ticket-head">
             <span className="mx-mono">IN-261116-Q4V</span>
-            <span className="mx-chip mx-chip--live">Gate 04</span>
+            <span className="mx-chip mx-chip--live">Step 4</span>
           </div>
           <ol>
             {GATES.map((g, i) => (

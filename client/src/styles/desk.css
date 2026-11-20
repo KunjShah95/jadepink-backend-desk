@@ -1843,3 +1843,10 @@ body {
     content: attr(data-short);
   }
 }
+
+.spine__no {
+  inset-inline-start: 1.9rem;
+}
+.spine__item {
+  padding-inline-start: 3.35rem;
+}
